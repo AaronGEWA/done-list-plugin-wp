@@ -1,0 +1,5 @@
+{
+    "plugins": ["."],
+    "themes": ["./dl-theme"],
+    "testsEnvironment": false
+}
