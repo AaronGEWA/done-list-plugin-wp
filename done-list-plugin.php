@@ -38,12 +38,30 @@ function done_list_register_type() {
     register_taxonomy('dl_status', 'dl_project', $args);
 }
 
-function done_list_add_date_form($keys, $post) {
-    if ($post->post_type === 'dl_project') {
-        $keys = ['Completion date'];
+function dl_add_date_box() {
+    $screen = 'dl_project';
+    add_meta_box(
+        'dl_date_box_id',
+        'Abschlussdatum',
+        'dl_make_date_form',
+        $screen
+    );
+}
+
+function dl_make_date_form( $post ) {
+    ?>
+    <label for="date_field">Abschlussdatum:</label>
+    <input type="date" name="dl_date" id="date_field">
+    <?php
+}
+
+function dl_save_project_data($post_id) {
+    //Validate Data
+    if(defined($_POST['dl_date']) && defined($_POST['dl_status'])) {
+        echo('Echo');
     }
-    return $keys;
 }
 
 add_action('init', 'done_list_register_type');
-add_filter('postmeta_form_keys', 'done_list_add_date_form', 10, 2);
+add_action('add_meta_boxes', 'dl_add_date_box');
+add_action('save_post', 'dl_save_project_data');
